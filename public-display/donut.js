@@ -21,7 +21,8 @@ class Donut {
     }
 
     hitsPlayer(){
-        if (this.posY + this.radius > player.posY && 
+        if (this.posY + this.radius >= player.posY && 
+            this.posY < player.posY + 5 &&
             this.posX > player.posX && 
             this.posX < player.posX + player.width) {
           return true;
@@ -94,6 +95,7 @@ class Trash {
 
     hitsPlayer(){
         if (this.posY + this.radius > player.posY && 
+            this.posY < player.posY + 5 &&
             this.posX > player.posX && 
             this.posX < player.posX + player.width) {
           return true;

@@ -1,3 +1,4 @@
+import { request, response } from 'express';
 import { express, Server, cors, SerialPort, ReadlineParser } from './dependencies.js'
 
 const PORT = 5050;
@@ -5,7 +6,9 @@ const PORT = 5050;
 //⚙️ HTTP COMMUNICATION SETUP _________________________________________________
 const app = express();
 const STATIC_MUPI_DISPLAY = express.static('public-display');
+const STATIC_MOBILE= express.static('public-mobile');
 app.use('/mupi-display', STATIC_MUPI_DISPLAY);
+app.use('/mobile', STATIC_MOBILE);
 app.use(express.json());
 //============================================ END
 
@@ -28,6 +31,7 @@ const httpServer = app.listen(PORT, () => {
     console.table(
         {
             'Mupi display:' : 'http://localhost:5050/mupi-display',
+            'Mobile:' : 'http://localhost:5050/mobile'
         }
     )
 });
@@ -52,6 +56,16 @@ ioServer.on('connection', (socket) => {
 2) Create an endpoint to POST user score and print it
 _____________________________________________ */
 
-app.post('/', (request, response) =>{
+let userFinalScore = 0;
 
+app.post('/score', (request, response) =>{
+    let userPoints = request.body;
+    console.log(userPoints);
+    userFinalScore = userPoints.content;
+})
+
+app.get('/final-score', (request, response) =>{
+    let message = {content: userFinalScore}
+    response.send(message);
+    response.end();
 })

@@ -1,6 +1,6 @@
 const URL = `http://${window.location.hostname}:5050`;
 let socket = io(URL, { path: '/real-time' });
-let screens = 0;
+let screens = 2;
 let score = 0;
 
 //Characters
@@ -69,6 +69,7 @@ function draw() {
                     donuts[i].collected = true;
                     donuts.splice(i, 1);
                     score++;
+                    postScore(score);
                     // coin.play();
                 }
 
@@ -93,6 +94,7 @@ function draw() {
                     trash[i].collected = true;
                     trashToRemove.push(i);
                     score--;
+                    postScore(score);
                 }
 
                 if(trash[i].offScreen()){
@@ -109,6 +111,11 @@ function draw() {
 
         case 3:
             image(winnerImage, 0, 0, windowWidth, windowHeight);
+            textSize(20);
+            textAlign(CENTER , CENTER)
+            fill('brown');
+            text(`Tu puntaje final: ${score}`, windowWidth/2, windowHeight/2);
+            getFinalScore();
             break;
 
         case 4:
@@ -138,9 +145,6 @@ function mousePressed(){
     screens++;
 }
 
-function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-}
 
 
 /*___________________________________________
@@ -155,6 +159,24 @@ socket.on('arduinoMessage', (arduinoMessage) => {
 
 /*___________________________________________
 
-2) Include the fetch method to post each time the snake eats a mouse
+2) Include the fetch method to post each time the user recollects a donut
 _____________________________________________ */
+const postScore = async (points) =>{
+    let message = {content: points};
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(message)
+    }
+
+    await fetch(`${URL}/score`, options)
+}
+
+const getFinalScore = async () =>{
+    const response = await fetch(`${URL}/final-score`);
+    const data = await response.json();
+    return score = data.content;
+}
 
