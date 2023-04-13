@@ -1,7 +1,7 @@
 
 const URL = `http://${window.location.hostname}:5050`;
 let socket = io(URL, { path: '/real-time' });
-let screens = 2;
+let screens = 0;
 let score = 0;
 
 //Characters
@@ -10,7 +10,7 @@ let player;
 let trash = [];
 
 //Images
-let startImage, instructionsImage, winnerImage;
+let startImage, instructionsImage, winnerImage, thanksImage, joystick;
 
 //Sounds
 let coin;
@@ -29,6 +29,8 @@ function preload(){
     startImage = loadImage('./assets/Initial.png');
     instructionsImage = loadImage('./assets/Instructions.png');
     winnerImage = loadImage('./assets/Winner.png');
+    thanksImage = loadImage('./assets/Gracias.png');
+    joystick = loadImage('./assets/Joystick.png');
     //Sounds
     // soundFormats('mp3', 'ogg');
     // coin = loadSound('./assets/coinSound');
@@ -44,11 +46,22 @@ function setup() {
 function draw() {
     switch (screens) {
         case 0:
-            image(startImage, 0, 0, windowWidth, windowHeight);
+            background(startImage);
+            if (frameCount % 120 === 0) {
+                tint(255, 0);
+                setTimeout(() => {
+                  noTint();
+                }, 1000);
+              }
+
+            imageMode(CENTER)
+            image(joystick, windowWidth/2, windowHeight/2 + 100, 80, 80);
+            imageMode(CORNER)
             break;
 
         case 1:
             image(instructionsImage, 0, 0, windowWidth, windowHeight);
+
             break;
 
         case 2:
@@ -131,7 +144,7 @@ function draw() {
             break;
 
         case 4:
-            
+            image(thanksImage, 0, 0, windowWidth, windowHeight);
             break;
 
         case 5:
