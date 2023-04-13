@@ -1,3 +1,4 @@
+
 const URL = `http://${window.location.hostname}:5050`;
 let socket = io(URL, { path: '/real-time' });
 let screens = 2;
@@ -17,6 +18,10 @@ let coin;
 //Canvas
 let windowWidth = 426;
 let windowHeight = 621;
+
+//counter
+let counter = 60;
+
 
 
 function preload(){
@@ -47,13 +52,20 @@ function draw() {
             break;
 
         case 2:
-            //creacion del personaje
-
+            //contador
+            if (frameCount % 60 === 0) {
+                counter--;
+            } else if(counter === 0){
+                counter = 0;
+                screens++;
+            }
             background(255);
+            //creacion del personaje
             player.show();
             player.move();
             textSize(23);
-            text(`Score: ${score}`, 25, 30);
+            text(`Puntaje: ${score}`, 25, 30);
+            text(`Tiempo restante: ${counter}`, 25, 60);
 
             // creacion de las donas
 
