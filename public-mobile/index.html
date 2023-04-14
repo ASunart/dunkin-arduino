@@ -13,17 +13,21 @@
         <img class="top-chocolate" src="./assets/top-chocolate.png" alt="Chocolate explosion"/>
     </header>
     <main>
-        <form method="post">
+        <form method="post" action="/user-data">
             <section class="form-inputs">
                 <img src="./assets/donut.png" alt="Donut" class="donut"/>
-                <input type="text" placeholder="Nombre">
-                <input type="email" placeholder="Email">
-                <input type="tel" placeholder="Celular">
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre">
+                <input type="email" id="email" name="email" placeholder="Email">
+                <input type="tel" id="celular" name="celular" placeholder="Celular">
             </section>
 
             <button class="form-btn" type="submit">Continuar</button>
         </form>
         <img src="./assets/bottomChocolate.png" alt="Chocolate explosion" class="btm-chocolate">
     </main>
+
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+        crossorigin="anonymous"></script>
 </body>
 </html>
