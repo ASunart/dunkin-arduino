@@ -25,9 +25,9 @@ class Donut {
             this.posY < player.posY + 5 &&
             this.posX > player.posX && 
             this.posX < player.posX + player.width) {
-          return true;
+        return true;
         } else {
-          return false;
+        return false;
         }
     }
 
@@ -41,6 +41,12 @@ class Donut {
 }
 
 //----------------------------- Canasta de donas del Jugador
+
+let movement;
+
+socket.on('controlStatus', message => {
+    movement = message.x;
+})
 
 class Player {
     constructor(posX, posY){
@@ -57,13 +63,13 @@ class Player {
     }
 
     move(){
-        if (keyIsDown(LEFT_ARROW)) {
+        if (movement < 500) {
             this.posX -= this.speed;
-          }
-          if (keyIsDown(RIGHT_ARROW)) {
+        }
+        if (movement > 520) {
             this.posX += this.speed;
-          }
-          if (this.posX < 0) {
+        }
+        if (this.posX < 0) {
             this.posX = 0;
         } else if (this.posX + this.width > windowWidth) {
             this.posX = windowWidth - this.width;

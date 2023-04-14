@@ -24,6 +24,7 @@ let counter = 60;
 
 
 
+
 function preload(){
     //Images
     startImage = loadImage('./assets/Initial.png');
@@ -50,9 +51,9 @@ function draw() {
             if (frameCount % 120 === 0) {
                 tint(255, 0);
                 setTimeout(() => {
-                  noTint();
+                noTint();
                 }, 1000);
-              }
+            }
 
             imageMode(CENTER)
             image(joystick, windowWidth/2, windowHeight/2 + 100, 80, 80);
@@ -95,6 +96,7 @@ function draw() {
                     donuts.splice(i, 1);
                     score++;
                     postScore(score);
+                    socket.emit('point', 'A');
                     // coin.play();
                 }
 
@@ -128,7 +130,7 @@ function draw() {
 
                 for (let i = trashToRemove.length - 1; i >= 0; i--) {
                     trash.splice(trashToRemove[i], 1);
-                  }
+                }
             }
 
             
@@ -138,7 +140,7 @@ function draw() {
             image(winnerImage, 0, 0, windowWidth, windowHeight);
             textSize(20);
             textAlign(CENTER , CENTER)
-            fill('brown');
+            fill(04, 56, 23);
             text(`Tu puntaje final: ${score}`, windowWidth/2, windowHeight/2);
             getFinalScore();
             break;
@@ -166,10 +168,17 @@ function draw() {
 
 }
 
-function mousePressed(){
-    screens++;
-}
+// function mousePressed(){
+//     screens++;
+// }
 
+socket.on('controlStatus', message => {
+    let boton = message.button;
+
+    if (boton == '1') {
+        screens++;
+    }
+})
 
 
 /*___________________________________________
