@@ -13,7 +13,10 @@ let trash = [];
 let startImage, instructionsImage, winnerImage, thanksImage, joystick;
 
 //Sounds
-let coin;
+const coin = new Audio('./assets/coinSound.mp3');
+const wrongCoin = new Audio('./assets/denySound.wav');
+const initialMusic = new Audio('./assets/initialMusic.mp3');
+
 
 //Canvas
 let windowWidth = 426;
@@ -22,19 +25,13 @@ let windowHeight = 621;
 //counter
 let counter = 60;
 
-
-
-
 function preload(){
     //Images
     startImage = loadImage('./assets/Initial.png');
     instructionsImage = loadImage('./assets/Instructions.png');
     winnerImage = loadImage('./assets/Winner.png');
     thanksImage = loadImage('./assets/Gracias.png');
-    joystick = loadImage('./assets/Joystick.png');
-    //Sounds
-    // soundFormats('mp3', 'ogg');
-    // coin = loadSound('./assets/coinSound');
+    joystick = loadImage('./assets/Joystick.png'); 
 }
 
 
@@ -47,6 +44,7 @@ function setup() {
 function draw() {
     switch (screens) {
         case 0:
+            initialMusic.play();
             background(startImage);
             if (frameCount % 120 === 0) {
                 tint(255, 0);
@@ -62,7 +60,7 @@ function draw() {
 
         case 1:
             image(instructionsImage, 0, 0, windowWidth, windowHeight);
-
+            initialMusic.stop();
             break;
 
         case 2:
@@ -97,12 +95,11 @@ function draw() {
                     score++;
                     postScore(score);
                     socket.emit('point', 'A');
-                    // coin.play();
+                    coin.play();
                 }
 
                 if(donuts[i].offScreen()){
                     donuts.splice(i, 1);
-                    console.log('Off');
                 }
             }
 
@@ -122,6 +119,7 @@ function draw() {
                     trashToRemove.push(i);
                     score--;
                     postScore(score);
+                    wrongCoin.play();
                 }
 
                 if(trash[i].offScreen()){
