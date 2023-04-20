@@ -14,25 +14,25 @@ app.use(express.urlencoded({extended: true}));
 //============================================ END
 
 //⚙️ SERIAL COMMUNICATION SETUP -------------------------------------------------
-const protocolConfiguration = { // *New: Defining Serial configurations
-    path: 'COM3', //*Change this COM# or usbmodem#####
-    baudRate: 9600
-};
-const port = new SerialPort(protocolConfiguration);
+// const protocolConfiguration = { // *New: Defining Serial configurations
+//     path: 'COM3', //*Change this COM# or usbmodem#####
+//     baudRate: 9600
+// };
+// const port = new SerialPort(protocolConfiguration);
 
-//El parser es para desencriptar el mensaje de Arduino
-const parser = port.pipe(new ReadlineParser);
-parser.on('data', (arduinoData) =>{
+// //El parser es para desencriptar el mensaje de Arduino
+// const parser = port.pipe(new ReadlineParser);
+// parser.on('data', (arduinoData) =>{
     
-    let dataArray = arduinoData.split(" ");
-    let controlStatus = {
-        x: dataArray[1],
-        y: dataArray[3],
-        button: dataArray[5]
-    }
-    //console.log(controlStatus);
-    ioServer.emit('controlStatus', controlStatus);
-})
+//     let dataArray = arduinoData.split(" ");
+//     let controlStatus = {
+//         x: dataArray[1],
+//         y: dataArray[3],
+//         button: dataArray[5]
+//     }
+//     //console.log(controlStatus);
+//     ioServer.emit('controlStatus', controlStatus);
+// })
 //============================================ END
 
 //⚙️ WEBSOCKET COMMUNICATION SETUP -------------------------------------------------

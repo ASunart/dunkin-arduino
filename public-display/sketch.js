@@ -8,6 +8,7 @@ let score = 0;
 let donuts = [];
 let player;
 let trash = [];
+let trashToRemove = [];
 
 //Images
 let startImage, instructionsImage, winnerImage, thanksImage, joystick;
@@ -16,6 +17,7 @@ let startImage, instructionsImage, winnerImage, thanksImage, joystick;
 const coin = new Audio('./assets/coinSound.mp3');
 const wrongCoin = new Audio('./assets/denySound.wav');
 const initialMusic = new Audio('./assets/initialMusic.mp3');
+const gameMusic = new Audio('./assets/gameMusic.mp3');
 
 
 //Canvas
@@ -59,17 +61,19 @@ function draw() {
             break;
 
         case 1:
+            initialMusic.pause();
             image(instructionsImage, 0, 0, windowWidth, windowHeight);
-            initialMusic.stop();
             break;
 
         case 2:
             //contador
+            gameMusic.play();
             if (frameCount % 60 === 0) {
                 counter--;
             } else if(counter === 0){
                 counter = 0;
                 screens++;
+                gameMusic.pause();
             }
             background(255);
             //creacion del personaje
@@ -104,7 +108,7 @@ function draw() {
             }
 
             // creacion de las bolitas malignas
-            let trashToRemove = [];
+
 
             if (frameCount % 230 === 0) {
                 trash.push(new Trash());
@@ -130,11 +134,11 @@ function draw() {
                     trash.splice(trashToRemove[i], 1);
                 }
             }
-
             
             break;
 
         case 3:
+            gameMusic.pause();
             image(winnerImage, 0, 0, windowWidth, windowHeight);
             textSize(20);
             textAlign(CENTER , CENTER)
@@ -147,28 +151,18 @@ function draw() {
             image(thanksImage, 0, 0, windowWidth, windowHeight);
             break;
 
-        case 5:
-            
-            break;
-
-        case 6:
-            
-            break;
-
-        case 7:
-            
-            break;
-
-    
         default:
             break;
     }
 
 }
 
-// function mousePressed(){
-//     screens++;
-// }
+function keyPressed(){
+    if ('ENTER') {
+        screens++;
+    }
+
+}
 
 socket.on('controlStatus', message => {
     let boton = message.button;
