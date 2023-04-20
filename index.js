@@ -1,6 +1,7 @@
 import { express, Server, cors, SerialPort, ReadlineParser } from './dependencies.js'
-
 const PORT = 5050;
+
+
 
 //⚙️ HTTP COMMUNICATION SETUP _________________________________________________
 const app = express();
@@ -11,28 +12,32 @@ app.use('/mobile', STATIC_MOBILE);
 app.use(express.json());
 app.use(cors({origin: "*"}));
 app.use(express.urlencoded({extended: true}));
+app.use(express.static('./public-mobile'));
+app.set('view engine', 'ejs');
+app.set('views', 'public-mobile');
+
 //============================================ END
 
 //⚙️ SERIAL COMMUNICATION SETUP -------------------------------------------------
-// const protocolConfiguration = { // *New: Defining Serial configurations
-//     path: 'COM3', //*Change this COM# or usbmodem#####
-//     baudRate: 9600
-// };
-// const port = new SerialPort(protocolConfiguration);
+const protocolConfiguration = { // *New: Defining Serial configurations
+    path: 'COM3', //*Change this COM# or usbmodem#####
+    baudRate: 9600
+};
+const port = new SerialPort(protocolConfiguration);
 
-// //El parser es para desencriptar el mensaje de Arduino
-// const parser = port.pipe(new ReadlineParser);
-// parser.on('data', (arduinoData) =>{
+//El parser es para desencriptar el mensaje de Arduino
+const parser = port.pipe(new ReadlineParser);
+parser.on('data', (arduinoData) =>{
     
-//     let dataArray = arduinoData.split(" ");
-//     let controlStatus = {
-//         x: dataArray[1],
-//         y: dataArray[3],
-//         button: dataArray[5]
-//     }
-//     //console.log(controlStatus);
-//     ioServer.emit('controlStatus', controlStatus);
-// })
+    let dataArray = arduinoData.split(" ");
+    let controlStatus = {
+        x: dataArray[1],
+        y: dataArray[3],
+        button: dataArray[5]
+    }
+    //console.log(controlStatus);
+    ioServer.emit('controlStatus', controlStatus);
+})
 //============================================ END
 
 //⚙️ WEBSOCKET COMMUNICATION SETUP -------------------------------------------------
@@ -58,7 +63,10 @@ ioServer.on('connection', (socket) => {
 
     socket.on('point', message => {
         port.write(message);
-        console.log(message);
+    })
+
+    socket.on('mobile-form', mobile =>{
+        socket.broadcast.emit('screen-change', mobile);
     })
 
 });
@@ -76,15 +84,12 @@ app.post('/user-data', (request, response) =>{
     const user = request.body;
     users.push(user);
     console.log(users);
-    response.send(`<strong>Nombre del usuario:</strong> ${user.nombre} <br>
-    <strong>Email del usuario:</strong> ${user.email} <br>
-    <strong>Celular del usuario:</strong> ${user.celular}
-    `)
+    response.render('final', {user: user});
+    response.end();
 })
 
 app.post('/score', (request, response) =>{
     let userPoints = request.body;
-    //console.log(userPoints);
     userFinalScore = userPoints.content;
 })
 

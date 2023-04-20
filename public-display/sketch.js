@@ -1,5 +1,4 @@
-
-const URL = `http://${window.location.hostname}:5050`;
+const URL = `${window.location.hostname}`;
 let socket = io(URL, { path: '/real-time' });
 let screens = 0;
 let score = 0;
@@ -8,10 +7,13 @@ let score = 0;
 let donuts = [];
 let player;
 let trash = [];
-let trashToRemove = [];
 
-//Images
-let startImage, instructionsImage, winnerImage, thanksImage, joystick;
+
+
+//Screen images
+let startImage, instructionsImage, winnerImage, thanksImage, joystick, dunkinPattern;
+//Game images
+let donut1, donut2, badDonut, playerBox;
 
 //Sounds
 const coin = new Audio('./assets/coinSound.mp3');
@@ -34,7 +36,13 @@ function preload(){
     winnerImage = loadImage('./assets/Winner.png');
     thanksImage = loadImage('./assets/Gracias.png');
     joystick = loadImage('./assets/Joystick.png'); 
+    donut1 = loadImage('./assets/donut1.png');
+    donut2 = loadImage('./assets/donut2.png'); 
+    badDonut = loadImage('./assets/badDonut.png');
+    playerBox = loadImage('./assets/playerBox.png');
+    dunkinPattern = loadImage('./assets/DunkinPattern.png');
 }
+
 
 
 function setup() {
@@ -66,6 +74,8 @@ function draw() {
             break;
 
         case 2:
+            let donutsImage = [donut1, donut2];
+            let randomDonut = random(donutsImage);
             //contador
             gameMusic.play();
             if (frameCount % 60 === 0) {
@@ -75,23 +85,26 @@ function draw() {
                 screens++;
                 gameMusic.pause();
             }
-            background(255);
+            
+            background(dunkinPattern);
+            
             //creacion del personaje
             player.show();
             player.move();
-            textSize(23);
-            text(`Puntaje: ${score}`, 25, 30);
-            text(`Tiempo restante: ${counter}`, 25, 60);
+            fill(225, 19, 131);
+            textSize(18);
+            text(`Puntaje: ${score}`, 20, 35);
+            text(`Tiempo restante: ${counter}`, 20, 60);
 
             // creacion de las donas
 
             if (frameCount % 90 === 0) {
-                donuts.push(new Donut());
+                donuts.push(new Donut(randomDonut));
             }
         
             for (let i = donuts.length - 1; i >= 0; i--) {
                 donuts[i].move();
-                donuts[i].show();
+                donuts[i].show(random(donutsImage));
 
                 if(donuts[i].hitsPlayer()){
                     donuts[i].collected = true;
@@ -108,7 +121,7 @@ function draw() {
             }
 
             // creacion de las bolitas malignas
-
+            let trashToRemove = [];
 
             if (frameCount % 230 === 0) {
                 trash.push(new Trash());
@@ -157,20 +170,8 @@ function draw() {
 
 }
 
-function keyPressed(){
-    if ('ENTER') {
-        screens++;
-    }
 
-}
 
-socket.on('controlStatus', message => {
-    let boton = message.button;
-
-    if (boton == '1') {
-        screens++;
-    }
-})
 
 
 /*___________________________________________
@@ -179,8 +180,16 @@ socket.on('controlStatus', message => {
 You may want to use a Switch structure to listen for up, down, right and left cases.
 _____________________________________________ */
 
-socket.on('arduinoMessage', (arduinoMessage) => {
+socket.on('controlStatus', message => {
+    let boton = message.button;
+        if (boton == '1' && screens < 2) {
+            screens++;
+        } 
+})
 
+socket.on('screen-change', msn =>{
+    screens = msn.screen;
+    console.log(msn);
 })
 
 /*___________________________________________

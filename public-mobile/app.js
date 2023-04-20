@@ -1,5 +1,8 @@
-const btn = document.querySelector('form-btn');
+const URL = `${window.location.hostname}`;
+let socket = io(URL, { path: '/real-time' });
 
-btn.addEventListener('click', ()=>{
-    
+const mobileBtn = document.querySelector('.form-btn');
+
+mobileBtn.addEventListener('click', ()=>{
+    socket.emit('mobile-form', {screen: 4});
 })

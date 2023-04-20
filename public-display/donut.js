@@ -1,18 +1,18 @@
 //------------------------------ Donas a recoger
 
 class Donut {
-    constructor(){
+    constructor(image){
         this.posX = random(windowWidth);
         this.posY = 0;
-        this.radius = 20;
+        this.size = 40;
         this.speed = floor(random(2, 5));
         this.collected = false;
+        this.image = image;
     }
 
     show(){
         if (!this.collected) {
-            fill('yellow');
-            circle(this.posX, this.posY, this.radius);
+            image(this.image, this.posX, this.posY, this.size, this.size);
         }
     }
 
@@ -21,7 +21,7 @@ class Donut {
     }
 
     hitsPlayer(){
-        if (this.posY + this.radius >= player.posY && 
+        if (this.posY + this.size >= player.posY && 
             this.posY < player.posY + 5 &&
             this.posX > player.posX && 
             this.posX < player.posX + player.width) {
@@ -32,7 +32,7 @@ class Donut {
     }
 
     offScreen(){
-        if (this.posY > windowHeight + this.radius) {
+        if (this.posY > windowHeight + this.width) {
             return true;
         } else {
             return false;
@@ -45,7 +45,7 @@ class Donut {
 let movement;
 
 socket.on('controlStatus', message => {
-    movement = message.x;
+    movement = message.y;
 })
 
 class Player {
@@ -53,20 +53,19 @@ class Player {
         this.posX = posX;
         this.posY = posY;
         this.speed = 10;
-        this.width = 80;
-        this.height = 20;
+        this.width = 150;
+        this.height = 66;
     }
 
     show(){
-        fill('blue');
-        rect(this.posX, this.posY, this.width, this.height);
+        image(playerBox, this.posX, this.posY, this.width, this.height);
     }
 
     move(){
-        if (movement < 500) {
+        if (movement > 500) {
             this.posX -= this.speed;
         }
-        if (movement > 520) {
+        if (movement < 520) {
             this.posX += this.speed;
         }
         if (this.posX < 0) {
@@ -83,15 +82,14 @@ class Trash {
     constructor(){
         this.posX = random(windowWidth);
         this.posY = 0;
-        this.radius = 20;
+        this.radius = 40;
         this.speed = floor(random(2, 5));
         this.collected = false;
     }
 
     show(){
         if (!this.collected) {
-            fill('red');
-            circle(this.posX, this.posY, this.radius);
+            image(badDonut, this.posX, this.posY, this.radius, this.radius);
         }
     }
 
