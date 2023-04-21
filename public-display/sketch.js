@@ -1,6 +1,6 @@
 const URL = `${window.location.hostname}`;
 let socket = io(URL, { path: '/real-time' });
-let screens = 0;
+let screens = 3;
 let score = 0;
 
 //Characters
@@ -31,16 +31,16 @@ let counter = 60;
 
 function preload(){
     //Images
-    startImage = loadImage('./assets/Initial.png');
-    instructionsImage = loadImage('./assets/Instructions.png');
-    winnerImage = loadImage('./assets/Winner.png');
-    thanksImage = loadImage('./assets/Gracias.png');
-    joystick = loadImage('./assets/Joystick.png'); 
-    donut1 = loadImage('./assets/donut1.png');
-    donut2 = loadImage('./assets/donut2.png'); 
-    badDonut = loadImage('./assets/badDonut.png');
-    playerBox = loadImage('./assets/playerBox.png');
-    dunkinPattern = loadImage('./assets/DunkinPattern.png');
+    startImage = loadImage('./assets/Initial.webp');
+    instructionsImage = loadImage('./assets/Instructions.webp');
+    winnerImage = loadImage('./assets/Winner.webp');
+    thanksImage = loadImage('./assets/Gracias.webp');
+    joystick = loadImage('./assets/Joystick.webp'); 
+    donut1 = loadImage('./assets/donut1.webp');
+    donut2 = loadImage('./assets/donut2.webp'); 
+    badDonut = loadImage('./assets/badDonut.webp');
+    playerBox = loadImage('./assets/playerBox.webp');
+    dunkinPattern = loadImage('./assets/DunkinPattern.webp');
 }
 
 
@@ -171,16 +171,13 @@ function draw() {
 }
 
 
-
-
-
 /*___________________________________________
 
 1) Include the socket method to listen to events and change the character position.
-You may want to use a Switch structure to listen for up, down, right and left cases.
 _____________________________________________ */
 
 socket.on('controlStatus', message => {
+    //Listen to arduino button and change screens
     let boton = message.button;
         if (boton == '1' && screens < 2) {
             screens++;
@@ -188,6 +185,7 @@ socket.on('controlStatus', message => {
 })
 
 socket.on('screen-change', msn =>{
+    //Listen to mobile instructions and change screens
     screens = msn.screen;
     console.log(msn);
 })
@@ -196,6 +194,8 @@ socket.on('screen-change', msn =>{
 
 2) Include the fetch method to post each time the user recollects a donut
 _____________________________________________ */
+
+//Post user score to /score endpoint on server
 const postScore = async (points) =>{
     let message = {content: points};
     const options = {
@@ -209,6 +209,7 @@ const postScore = async (points) =>{
     await fetch(`${URL}/score`, options)
 }
 
+//Get final score of user store on server to print it on mupi
 const getFinalScore = async () =>{
     const response = await fetch(`${URL}/final-score`);
     const data = await response.json();

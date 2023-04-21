@@ -7,7 +7,7 @@
 }
 
 body{
-    background: url('./assets/DunkinPattern.png');
+    background: url('./assets/DunkinPattern.webp');
     background-color: rgba(225, 19, 131, 0.6);
     object-fit: contain;
 }

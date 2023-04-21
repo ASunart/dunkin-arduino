@@ -1,3 +1,4 @@
+//Import dependencies
 import { express, Server, cors, SerialPort, ReadlineParser } from './dependencies.js'
 const PORT = 5050;
 
@@ -27,15 +28,17 @@ const port = new SerialPort(protocolConfiguration);
 
 //El parser es para desencriptar el mensaje de Arduino
 const parser = port.pipe(new ReadlineParser);
+//Listen to arduino messages
 parser.on('data', (arduinoData) =>{
     
+    //Organizing an array of the arduino message to use it for the interaction
     let dataArray = arduinoData.split(" ");
     let controlStatus = {
         x: dataArray[1],
         y: dataArray[3],
         button: dataArray[5]
     }
-    //console.log(controlStatus);
+    //Emit arduino message
     ioServer.emit('controlStatus', controlStatus);
 })
 //============================================ END
@@ -56,30 +59,32 @@ const ioServer = new Server(httpServer, { path: '/real-time' });
 
 /* 🔄 WEBSOCKET COMMUNICATION __________________________________________
 
-1) Create the socket methods to listen the events and emit a response
-It should listen for directions and emit the incoming data.*/
+1) Create the socket methods to listen the events and emit a response.*/
 
 ioServer.on('connection', (socket) => {
 
     socket.on('point', message => {
+        //Send message to arduino
         port.write(message);
     })
 
     socket.on('mobile-form', mobile =>{
+        //Listen mobile screen changes
         socket.broadcast.emit('screen-change', mobile);
     })
 
 });
 
 /* 🔄 HTTP COMMUNICATION ___________________________________________
+*/
 
-2) Create an endpoint to POST user score and print it
-_____________________________________________ */
-
+//User final score variable
 let userFinalScore = 0;
 
+//users database
 const users =  [];
 
+//Receive data from form, push users to database, and send final mobile screen to user as response
 app.post('/user-data', (request, response) =>{
     const user = request.body;
     users.push(user);
@@ -88,11 +93,13 @@ app.post('/user-data', (request, response) =>{
     response.end();
 })
 
+//Receive points obtain by user in game and store them in user final score variable
 app.post('/score', (request, response) =>{
     let userPoints = request.body;
     userFinalScore = userPoints.content;
 })
 
+//Send final score to endpoint to print it on mupi screen
 app.get('/final-score', (request, response) =>{
     let message = {content: userFinalScore}
     response.send(message);
