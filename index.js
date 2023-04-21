@@ -28,6 +28,7 @@ const port = new SerialPort(protocolConfiguration);
 
 //El parser es para desencriptar el mensaje de Arduino
 const parser = port.pipe(new ReadlineParser);
+
 //Listen to arduino messages
 parser.on('data', (arduinoData) =>{
     

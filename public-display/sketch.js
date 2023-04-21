@@ -9,9 +9,8 @@ let player;
 let trash = [];
 
 
-
 //Screen images
-let startImage, instructionsImage, winnerImage, thanksImage, joystick, dunkinPattern;
+let startImage, instructionsImage, winnerImage, thanksImage, joystick, dunkinPattern, qrCode;
 //Game images
 let donut1, donut2, badDonut, playerBox;
 
@@ -41,6 +40,7 @@ function preload(){
     badDonut = loadImage('./assets/badDonut.webp');
     playerBox = loadImage('./assets/playerBox.webp');
     dunkinPattern = loadImage('./assets/DunkinPattern.webp');
+    qrCode = loadImage('./assets/qrCode.png');
 }
 
 
@@ -158,6 +158,9 @@ function draw() {
             fill(04, 56, 23);
             text(`Tu puntaje final: ${score}`, windowWidth/2, windowHeight/2);
             getFinalScore();
+            imageMode(CENTER);
+            image(qrCode, windowWidth/2 + 5 , windowHeight/2 + 180, 120, 120)
+            imageMode(CORNER);
             break;
 
         case 4:
