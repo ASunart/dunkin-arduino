@@ -1,47 +1,54 @@
 //Import dependencies
-import { express, Server, cors, SerialPort, ReadlineParser } from './dependencies.js'
+import { express, Server, cors, SerialPort, ReadlineParser, dotenv } from './dependencies.js'
+import mobileRoutes from './routes/mobileRoutes.js'
 const PORT = 5050;
-
+dotenv.config();
 
 
 //⚙️ HTTP COMMUNICATION SETUP _________________________________________________
 const app = express();
-const STATIC_MUPI_DISPLAY = express.static('public-display');
-const STATIC_MOBILE= express.static('public-mobile');
-app.use('/mupi-display', STATIC_MUPI_DISPLAY);
-app.use('/mobile', STATIC_MOBILE);
+//Static
+const STATIC_MUPI_DISPLAY = express.static('./static/public-display');
+const STATIC_MOBILE= express.static('./static/public-mobile');
+
+//Middlewares
 app.use(express.json());
 app.use(cors({origin: "*"}));
 app.use(express.urlencoded({extended: true}));
-app.use(express.static('./public-mobile'));
+app.use(express.static('./static/public-mobile'));
+
+//Endpoints
+app.use('/mupi-display', STATIC_MUPI_DISPLAY);
+app.use('/mobile', STATIC_MOBILE);
+app.use('/user-data', mobileRoutes);
 app.set('view engine', 'ejs');
-app.set('views', 'public-mobile');
+app.set('views', './static/public-mobile');
 
 //============================================ END
 
 //⚙️ SERIAL COMMUNICATION SETUP -------------------------------------------------
-const protocolConfiguration = { // *New: Defining Serial configurations
-    path: 'COM3', //*Change this COM# or usbmodem#####
-    baudRate: 9600
-};
-const port = new SerialPort(protocolConfiguration);
+// const protocolConfiguration = { // *New: Defining Serial configurations
+//     path: 'COM3', //*Change this COM# or usbmodem#####
+//     baudRate: 9600
+// };
+// const port = new SerialPort(protocolConfiguration);
 
-//El parser es para desencriptar el mensaje de Arduino
-const parser = port.pipe(new ReadlineParser);
+// //El parser es para desencriptar el mensaje de Arduino
+// const parser = port.pipe(new ReadlineParser);
 
-//Listen to arduino messages
-parser.on('data', (arduinoData) =>{
+// //Listen to arduino messages
+// parser.on('data', (arduinoData) =>{
     
-    //Organizing an array of the arduino message to use it for the interaction
-    let dataArray = arduinoData.split(" ");
-    let controlStatus = {
-        x: dataArray[1],
-        y: dataArray[3],
-        button: dataArray[5]
-    }
-    //Emit arduino message
-    ioServer.emit('controlStatus', controlStatus);
-})
+//     //Organizing an array of the arduino message to use it for the interaction
+//     let dataArray = arduinoData.split(" ");
+//     let controlStatus = {
+//         x: dataArray[1],
+//         y: dataArray[3],
+//         button: dataArray[5]
+//     }
+//     //Emit arduino message
+//     ioServer.emit('controlStatus', controlStatus);
+// })
 //============================================ END
 
 //⚙️ WEBSOCKET COMMUNICATION SETUP -------------------------------------------------
@@ -82,17 +89,6 @@ ioServer.on('connection', (socket) => {
 //User final score variable
 let userFinalScore = 0;
 
-//users database
-const users =  [];
-
-//Receive data from form, push users to database, and send final mobile screen to user as response
-app.post('/user-data', (request, response) =>{
-    const user = request.body;
-    users.push(user);
-    console.log(users);
-    response.render('final', {user: user});
-    response.end();
-})
 
 //Receive points obtain by user in game and store them in user final score variable
 app.post('/score', (request, response) =>{
