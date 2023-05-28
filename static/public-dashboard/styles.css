@@ -1,0 +1,35 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#interactions{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 30px;
+}
+
+#lastLeads{
+    background-color: aqua;
+    width: 70%;
+    padding: 1em;
+    margin-top: 2em;
+}
+
+#leads > tr {
+    background-color: beige;
+}
+
+#graphs{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 2em;
+}
+
+#graphs > canvas{
+    max-width: 40em;
+    max-height: 20em;
+}

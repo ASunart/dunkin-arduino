@@ -1,4 +1,3 @@
-import { json } from 'express';
 import {fs} from '../dependencies.js';
 
 export const postUserdata = (req, res) =>{

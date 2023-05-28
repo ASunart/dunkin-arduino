@@ -1,6 +1,8 @@
 //Import dependencies
 import { express, Server, cors, SerialPort, ReadlineParser, dotenv } from './dependencies.js'
 import mobileRoutes from './routes/mobileRoutes.js'
+import dashboardRoutes from './routes/dashboardRoutes.js';
+import firestoreDB from './firestoreConfig.js';
 const PORT = 5050;
 dotenv.config();
 
@@ -10,6 +12,7 @@ const app = express();
 //Static
 const STATIC_MUPI_DISPLAY = express.static('./static/public-display');
 const STATIC_MOBILE= express.static('./static/public-mobile');
+const STATIC_DASHBOARD= express.static('./static/public-dashboard');
 
 //Middlewares
 app.use(express.json());
@@ -20,7 +23,9 @@ app.use(express.static('./static/public-mobile'));
 //Endpoints
 app.use('/mupi-display', STATIC_MUPI_DISPLAY);
 app.use('/mobile', STATIC_MOBILE);
+app.use('/dashboard-app', STATIC_DASHBOARD);
 app.use('/user-data', mobileRoutes);
+app.use('/dashboard', dashboardRoutes);
 app.set('view engine', 'ejs');
 app.set('views', './static/public-mobile');
 
@@ -56,7 +61,8 @@ const httpServer = app.listen(PORT, () => {
     console.table(
         {
             'Mupi display:' : 'http://localhost:5050/mupi-display',
-            'Mobile:' : 'http://localhost:5050/mobile'
+            'Mobile:' : 'http://localhost:5050/mobile',
+            'Dashboard app:' : 'http://localhost:5050/dashboard-app'
         }
     )
 });
@@ -85,6 +91,10 @@ ioServer.on('connection', (socket) => {
 
 /* 🔄 HTTP COMMUNICATION ___________________________________________
 */
+
+// firestoreDB.getCollection('Leads').then((leads) => {
+//       console.log(leads);
+//     })
 
 //User final score variable
 let userFinalScore = 0;

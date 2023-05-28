@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap Font Icon CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <!-- stylesheet -->
+    <link rel="stylesheet" href="./styles.css">
+    <title>Dashboard App</title>
+</head>
+<body>
+    <header>
+        <section id="top-nav">
+            <img src="./assets/dnknLogo.webp" alt="Dunkin Logo">
+            <input type="search" name="" id="search-box"/>
+        </section>
+        <nav id="side-nav">
+            <ul>
+                <li id="nav-items"></li>
+                <li id="nav-items"></li>
+                <li id="nav-items"></li>
+                <li id="nav-items"></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="interactions">
+            <figure>
+                <canvas id="interactions-place"></canvas>
+            </figure>
+            <figure>
+                <canvas id="interactions-completed"></canvas>
+            </figure>
+            
+        </section>
+            <table id="lastLeads">
+                <thead>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Celular</th>
+                </thead>
+               <tbody id="leads">
+
+               </tbody>
+            </table>
+        <section id="goals"></section>
+        <section id="graphs">
+            <canvas id="barChart"></canvas>
+            <canvas id="lineChart"></canvas>
+        </section>
+        <section id="ooh-state"></section>
+    </main>
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
+        integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"
+        crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script defer  src="view.js"></script>
+    <script defer src="controller.js"></script>
+</body>
+</html>
