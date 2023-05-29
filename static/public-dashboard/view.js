@@ -8,6 +8,7 @@ class View {
     static barChartItem = document.querySelector('#barChart');
     static lineChartItem = document.querySelector('#lineChart');
 
+
     constructor(){
         this.interactionDoughnut;
         this.interactionCompletedDoughnut;
@@ -44,7 +45,7 @@ class View {
             },
             title: {
               display: true,
-              text: 'Chart.js Bar Chart'
+              text: 'Interacciones por día y lugar'
             }
           }
         },
@@ -143,17 +144,32 @@ class View {
   }
 
   updateTable(usersData){
-    View.lastLeadsTable.innerHTML = '';
+    if(View.lastLeadsTable){
+      View.lastLeadsTable.innerHTML = '';
 
-    usersData.forEach(element => {
-      let row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${element.nombre}</td>
-        <td>${element.email}</td>
-        <td>${element.celular}</td>
-      `
-      View.lastLeadsTable.appendChild(row);
-    });
+      usersData.forEach(element => {
+        let row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${element.nombre}</td>
+          <td>${element.email}</td>
+          <td>${element.celular}</td>
+        `
+        View.lastLeadsTable.appendChild(row);
+      });
+    }
+    
+  }
+
+  updateLocationDoughnut(newDataset){
+    //Im only human after all
+    this.interactionDoughnut.data.datasets[0].data = newDataset;
+    this.interactionDoughnut.update();
+  }
+
+  updateBarChart(newDatasetOne, newDatasetTwo){
+    this.barChart.data.datasets[0].data = newDatasetOne;
+    this.barChart.data.datasets[1].data = newDatasetTwo;
+    this.barChart.update();
   }
 
     render(){
@@ -163,3 +179,4 @@ class View {
         this.getLineChart();
     }
 }
+

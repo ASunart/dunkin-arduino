@@ -1,4 +1,5 @@
 import { fs } from "../dependencies.js";
+import * as KPI from './kpiCalculations.js';
 
 export const getData = (req,res) =>{
     try {
@@ -6,7 +7,12 @@ export const getData = (req,res) =>{
 
         const {users} = JSON.parse(usersJSONData);
 
-        res.send(users);
+        const interactionsPerPlace = KPI.getPlacePopularity(users);
+        const visitsByDay = KPI.getPlacePopularityByDay(users);
+
+        const dashboardData = {interactionsPerPlace, visitsByDay, users};
+
+        res.send(dashboardData);
     } catch (error) {
         console.error(error);
         res.status(500).send('Error reading JSON data');

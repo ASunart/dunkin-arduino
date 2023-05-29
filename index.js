@@ -92,10 +92,6 @@ ioServer.on('connection', (socket) => {
 /* 🔄 HTTP COMMUNICATION ___________________________________________
 */
 
-// firestoreDB.getCollection('Leads').then((leads) => {
-//       console.log(leads);
-//     })
-
 //User final score variable
 let userFinalScore = 0;
 

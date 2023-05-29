@@ -6,6 +6,8 @@ const mobileBtn = document.querySelector('.form-btn');
 const form = document.querySelector('form');
 const agreeCheckbox = document.getElementById('privacy-agreement');
 
+
+
 // Listen for input changes
 form.addEventListener('input', () => {
   // Check if all required inputs are filled and the checkbox is checked
@@ -23,8 +25,9 @@ agreeCheckbox.addEventListener('change', () => {
   form.dispatchEvent(event);
 });
 
-//Listen to click on button form to change screens
 mobileBtn.addEventListener('click', ()=>{
-    socket.emit('mobile-form', {screen: 4});
+  socket.emit('mobile-form', {screen: 4});
 })
+
+
 
