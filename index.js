@@ -89,6 +89,8 @@ ioServer.on('connection', (socket) => {
 
 });
 
+export {ioServer};
+
 /* 🔄 HTTP COMMUNICATION ___________________________________________
 */
 

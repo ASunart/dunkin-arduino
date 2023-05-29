@@ -1,5 +1,6 @@
 import {fs} from '../dependencies.js';
 import firestoreDB from '../firestoreConfig.js';
+import {ioServer} from '../index.js';
 
 export const postUserdata = async (req, res) =>{
     try {
@@ -21,6 +22,7 @@ export const postUserdata = async (req, res) =>{
     jsonData.users.push(jsonUser);
     await firestoreDB.addNewDocumentTo(jsonUser, 'Leads');
     fs.writeFileSync('./localCollection/users.json', JSON.stringify(jsonData, null, 2)); 
+    ioServer.emit('real-time-update', {state: true});
     res.render('final', {user: user});
     res.end();
     } catch (error) {

@@ -1,6 +1,3 @@
-const URL = `http://${window.location.hostname}:5050`;
-let socket = io(URL, { path: '/real-time' });
-
 class View {
     static interactionDoughnutItem = document.querySelector('#interactions-place');
     static interactionCompletedDoughnutItem = document.querySelector('#interactions-completed');
@@ -43,6 +40,7 @@ class View {
             legend: {
               position: 'top',
             },
+            decimation: false,
             title: {
               display: true,
               text: 'Interacciones por día y lugar'
