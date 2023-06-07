@@ -38,7 +38,10 @@ class View {
           responsive: true,
           plugins: {
             legend: {
-              position: 'top',
+              position: 'bottom',
+              labels:{
+                usePointStyle: true
+              }
             },
             decimation: false,
             title: {
@@ -60,12 +63,14 @@ class View {
             label: 'Jardín Plaza',
             data: [400, 200, 350, 300, 320, 400, 800],
             backgroundColor: 'rgba(200,0,0, 0.8)',
+            pointBackgroundColor: 'rgba(200,0,0, 0.8)',
             fill: true
           },
           {
             label: 'Unicentro',
             data: [200, 100, 200, 600, 420, 300, 900],
             backgroundColor: 'rgba(200,0,200, 0.8)',
+            pointBackgroundColor: 'rgba(200,0,200, 0.8)',
             fill: true
           }
         ]
@@ -75,16 +80,22 @@ class View {
         type: 'line',
         data: data,
         options: {
+          responsive: true,
           plugins: {
+            legend: {
+              position: 'bottom',
+              labels:{
+                usePointStyle: true
+              }
+            },
             filler: {
               propagate: false,
             },
             title: {
               display: true,
-              text: 'Title'
+              text: 'Interacción por hora',
             }
           },
-          pointBackgroundColor: '#fff',
           radius: 5,
           interaction: {
             intersect: false,
@@ -114,6 +125,21 @@ class View {
           const config = {
             type: 'doughnut',
             data: data,
+            options: {
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'bottom',
+                  labels:{
+                    usePointStyle: true
+                  }
+                },
+                title: {
+                  display: true,
+                  text: 'Interacción por lugar'
+                }
+              }
+            }
           };
           this.interactionDoughnut = new Chart(View.interactionDoughnutItem, config);
     }
