@@ -1,4 +1,3 @@
-import { parse } from "dotenv";
 
 export function getPlacePopularity(interactions) {
   const jpInteractions = interactions.filter(interaction => {
@@ -98,10 +97,4 @@ export function getPlacePopularityByInterval(interactions) {
   });
 
   return intervals;
-}
-
-export function leadsNumber(interactions){
-  interactions.forEach(lead =>{
-    
-  })
 }
