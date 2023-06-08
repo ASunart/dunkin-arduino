@@ -1,16 +1,16 @@
 class View {
     static interactionDoughnutItem = document.querySelector('#interactions-place');
-    static interactionCompletedDoughnutItem = document.querySelector('#interactions-completed');
     static lastLeadsTable = document.querySelector('#leads');
     static barChartItem = document.querySelector('#barChart');
     static lineChartItem = document.querySelector('#lineChart');
+    static goalsItem = document.querySelector('#goal-status');
 
 
     constructor(){
         this.interactionDoughnut;
-        this.interactionCompletedDoughnut;
         this.barChart;
         this.lineChart;
+        this.goalStatus;
     }
 
     getBarChart(){
@@ -144,28 +144,44 @@ class View {
           this.interactionDoughnut = new Chart(View.interactionDoughnutItem, config);
     }
 
-    getInteractionCompletedDoughnut(){
-        const data = {
-          labels: [
-            'Interacción completada',
-            'No completada',
+    getGoalChart(){
+      const data = {
+        labels: [
+          'Leads',
+          'Meta'
+        ],
+        datasets: [{
+          label: '# de leads',
+          data: [20, 100],
+          backgroundColor: [
+            'rgb(254, 109, 1)',
+            'rgba(0,0,0,0.05)'
           ],
-          datasets: [{
-            label: 'Porcentaje %',
-            data: [75, 25],
-            backgroundColor: [
-              'rgb(225, 19, 131)',
-              'rgb(104, 56, 23)',
-            ],
-            hoverOffset: 5
-          }]
-        };
-        const config = {
-          type: 'doughnut',
-          data: data,
-        };
-        this.interactionCompletedDoughnut = new Chart(View.interactionCompletedDoughnutItem, config);
-  }
+          hoverOffset: 5
+        }]
+      };
+      const config = {
+        type: 'doughnut',
+        data: data,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels:{
+                usePointStyle: true
+              }
+            },
+            title: {
+              display: true,
+              text: 'Número de leads'
+            }
+          }
+        }
+      };
+      this.goalStatus = new Chart(View.goalsItem, config);
+}
+
 
   updateTable(usersData){
     if(View.lastLeadsTable){
@@ -185,9 +201,13 @@ class View {
   }
 
   updateLocationDoughnut(newDataset){
-    //Im only human after all
     this.interactionDoughnut.data.datasets[0].data = newDataset;
     this.interactionDoughnut.update();
+  }
+
+  updateGoalsDoughnut(newDataset){
+    this.goalStatus.data.datasets[0].data = newDataset;
+    this.goalStatus.update();
   }
 
   updateBarChart(newDatasetOne, newDatasetTwo){
@@ -204,9 +224,9 @@ class View {
 
     render(){
         this.getInteractionDoughnut();
-        this.getInteractionCompletedDoughnut();
         this.getBarChart();
         this.getLineChart();
+        this.getGoalChart();
     }
 }
 

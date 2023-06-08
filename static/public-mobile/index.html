@@ -10,28 +10,32 @@
 <body>
     <header class="logo-container">
         <img class="dunkin-logo" src="./assets/dunkinLogo.webp" alt="Dunkin Logo" />
-        <img class="top-chocolate" src="./assets/top-chocolate.webp" alt="Chocolate explosion"/>
     </header>
     <main>
         <form method="post" action="/user-data">
             <section class="form-inputs">
-                <img src="./assets/donut.webp" alt="Donut" class="donut"/>
-                <input type="text" id="nombre" name="nombre" placeholder="Nombre" required/>
-                <input type="email" id="email" name="email" placeholder="Email" required/>
-                <input type="tel" id="celular" name="celular" placeholder="Celular" required/>
+                <img src="./assets/mini-donut.webp" alt="Mini donut floating" class="choco right-top">
+                <label for="nombre">Nombre<input type="text" id="nombre" name="nombre"  required/></label>
+                <label for="nombre">Email<input type="email" id="email" name="email"  required/></label>
+                <label for="nombre">Celular<input type="tel" id="celular" name="celular"  required/>  </label>       
                 <select name="mupi_location" id="mupi-location" required>
                     <option value="">Selecciona tu ubicación</option>
                     <option value="Jardín Plaza">Jardín Plaza</option>
                     <option value="Unicentro">Unicentro</option>
                 </select>
+                <fieldset>
                 <input type="checkbox" id="privacy-agreement" name="privacyAgreement" required/>
-                <label for="privacy-agreement">I agree to the data privacy policy.</label>
+                <label for="privacy-agreement" id="label-privacy">Acepto términos y condiciones.</label>
+                </fieldset>
+                
             </section>
 
             <button class="form-btn" type="submit" disabled>Continuar</button>
         </form>
-        <img src="./assets/bottomChocolate.webp" alt="Chocolate explosion" class="btm-chocolate">
-    </main>
+        <img src="./assets/mini-muffin.webp" alt="Mini muffin floating" class="choco left-top">
+        <img src="./assets/mini-muffin.webp" alt="Mini muffin floating" class="choco left-bottom">
+        <img src="./assets/choco-splash.webp" alt="Chocolate splash" class="choco right-bottom">
+        </main>
 
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"
         integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+"

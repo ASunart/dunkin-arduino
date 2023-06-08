@@ -20,13 +20,15 @@ const controller = (view, socket) => {
         [kpi.visitsByDay[1].Unicentro, kpi.visitsByDay[2].Unicentro, kpi.visitsByDay[3].Unicentro,
          kpi.visitsByDay[4].Unicentro, kpi.visitsByDay[5].Unicentro, kpi.visitsByDay[6].Unicentro], kpi.visitsByDay[0].Unicentro, )
 
-         view.updateLineChart(
+        view.updateLineChart(
             [kpi.visitsByHour["7am-9am"]["Jardín Plaza"], kpi.visitsByHour["9am-11am"]["Jardín Plaza"], kpi.visitsByHour["11am-1pm"]["Jardín Plaza"],
             kpi.visitsByHour["1pm-3pm"]["Jardín Plaza"], kpi.visitsByHour["3pm-5pm"]["Jardín Plaza"], kpi.visitsByHour["5pm-7pm"]["Jardín Plaza"], kpi.visitsByHour["7pm-9pm"]["Jardín Plaza"], 
             kpi.visitsByHour["9pm-11pm"]["Jardín Plaza"] ],
     
             [kpi.visitsByHour["7am-9am"].Unicentro, kpi.visitsByHour["9am-11am"].Unicentro, kpi.visitsByHour["11am-1pm"].Unicentro,
              kpi.visitsByHour["1pm-3pm"].Unicentro, kpi.visitsByHour["3pm-5pm"].Unicentro, kpi.visitsByHour["5pm-7pm"].Unicentro, kpi.visitsByHour["7pm-9pm"].Unicentro, kpi.visitsByHour["9pm-11pm"].Unicentro])
+
+        view.updateGoalsDoughnut([kpi.users.length, 100]);
     })();
 
     const updateRealTime = async () =>{
@@ -46,7 +48,7 @@ const controller = (view, socket) => {
         [kpi.visitsByDay[1].Unicentro, kpi.visitsByDay[2].Unicentro, kpi.visitsByDay[3].Unicentro,
          kpi.visitsByDay[4].Unicentro, kpi.visitsByDay[5].Unicentro, kpi.visitsByDay[6].Unicentro], kpi.visitsByDay[0].Unicentro, )
 
-         view.updateLineChart(
+        view.updateLineChart(
             [kpi.visitsByHour["7am-9am"]["Jardín Plaza"], kpi.visitsByHour["9am-11am"]["Jardín Plaza"], kpi.visitsByHour["11am-1pm"]["Jardín Plaza"],
             kpi.visitsByHour["1pm-3pm"]["Jardín Plaza"], kpi.visitsByHour["3pm-5pm"]["Jardín Plaza"], kpi.visitsByHour["5pm-7pm"]["Jardín Plaza"], kpi.visitsByHour["7pm-9pm"]["Jardín Plaza"], 
             kpi.visitsByHour["9pm-11pm"]["Jardín Plaza"] ],
@@ -54,6 +56,8 @@ const controller = (view, socket) => {
             [kpi.visitsByHour["7am-9am"].Unicentro, kpi.visitsByHour["9am-11am"].Unicentro, kpi.visitsByHour["11am-1pm"].Unicentro,
              kpi.visitsByHour["1pm-3pm"].Unicentro, kpi.visitsByHour["3pm-5pm"].Unicentro, kpi.visitsByHour["5pm-7pm"].Unicentro], kpi.visitsByHour["7pm-9pm"].Unicentro,
              kpi.visitsByHour["9pm-11pm"].Unicentro )
+
+        view.updateGoalsDoughnut([kpi.users.length, 100]);
     }
 
     socket.on('real-time-update', (data) =>{
