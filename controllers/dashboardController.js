@@ -9,8 +9,9 @@ export const getData = (req,res) =>{
 
         const interactionsPerPlace = KPI.getPlacePopularity(users);
         const visitsByDay = KPI.getPlacePopularityByDay(users);
+        const visitsByHour = KPI.getPlacePopularityByInterval(users);
 
-        const dashboardData = {interactionsPerPlace, visitsByDay, users};
+        const dashboardData = {interactionsPerPlace, visitsByDay, visitsByHour, users};
 
         res.send(dashboardData);
     } catch (error) {

@@ -21,13 +21,13 @@ class View {
       label: 'Jardín Plaza',
       data: [100, 200, 300, 400, 500, 600, 700],
       borderColor: 'rgb(0,0,0)',
-      backgroundColor: 'rgb(0,0,200)',
+      backgroundColor: 'rgb(254, 109, 1)',
     },
     {
       label: 'Unicentro',
       data: [100, 200, 300, 400, 500, 600, 700],
       borderColor: 'rgb(0,0,0)',
-      backgroundColor: 'rgb(200,0,200)',
+      backgroundColor: 'rgb(225, 19, 131)',
     }
   ]
 };
@@ -57,20 +57,20 @@ class View {
 
     getLineChart(){
       const data = {
-        labels: ['Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa', 'Do'],
+        labels: ['7am-9am', '9am-11am', '11am-1pm', '1pm-3pm', '3pm-5pm', '5pm-7pm', '7pm-9pm', '9pm-11pm'],
         datasets: [
           {
             label: 'Jardín Plaza',
-            data: [400, 200, 350, 300, 320, 400, 800],
-            backgroundColor: 'rgba(200,0,0, 0.8)',
-            pointBackgroundColor: 'rgba(200,0,0, 0.8)',
+            data: [400, 200, 350, 300, 320, 400, 800, 400],
+            backgroundColor: 'rgba(225, 19, 131,0.8)',
+            pointBackgroundColor: 'rgba(225, 19, 131,0.8)',
             fill: true
           },
           {
             label: 'Unicentro',
-            data: [200, 100, 200, 600, 420, 300, 900],
-            backgroundColor: 'rgba(200,0,200, 0.8)',
-            pointBackgroundColor: 'rgba(200,0,200, 0.8)',
+            data: [200, 100, 200, 600, 420, 300, 900, 200],
+            backgroundColor: 'rgba(104, 56, 23, 0.7)',
+            pointBackgroundColor: 'rgba(104, 56, 23, 1)',
             fill: true
           }
         ]
@@ -194,6 +194,12 @@ class View {
     this.barChart.data.datasets[0].data = newDatasetOne;
     this.barChart.data.datasets[1].data = newDatasetTwo;
     this.barChart.update();
+  }
+
+  updateLineChart(newDatasetOne, newDatasetTwo){
+    this.lineChart.data.datasets[0].data = newDatasetOne;
+    this.lineChart.data.datasets[1].data = newDatasetTwo;
+    this.lineChart.update();
   }
 
     render(){

@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+    scroll-behavior: smooth;
 }
 
 #top-nav{
@@ -29,8 +30,10 @@
 
 #top-nav > img {
   padding: 0.5em;
-  width: 5em;
+  width: 6em;
+  height: width;
   transition: ease 0.3s;
+  margin-left: 2em;
 }
 
 #top-nav > img:hover {
@@ -109,6 +112,7 @@
 #side-nav > ul > li > a{
   text-decoration: none;
   color: white;
+  font-family: 'Arial', sans-serif;
 }
 
 #side-nav > ul > li > a > .bi{
@@ -169,30 +173,36 @@ figure{
 
 /* Estilos generales de la tabla */
 #lastLeads {
-    width: 100%;
+    width: 85%;
+    margin-top: 1em;
     border-collapse: collapse;
     font-family: 'Arial', sans-serif;
+    overflow-y: scroll;
   }
   
   /* Estilos para el encabezado de la tabla */
   #lastLeads thead th {
-    background-color: #f5f5f5;
-    color: #333;
     font-weight: bold;
     padding: 12px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    color: #707070;
   }
 
   #lastLeads thead tr{
-    display: flex;
-    justify-content: space-between;
-    background-color: #f5f5f5;
+    display: grid;
+    gap: 20em;
+    grid-template-columns: repeat(3, 1fr); 
+    align-items: center;
+    border-bottom: 1px solid #ddd;
   }
+  
 
-  #lastLeads tbody tr{
-    display: flex;
-    justify-content: space-between;
+  #lastLeads tbody tr {
+    display: grid;
+    gap: 20em;
+    grid-template-columns: repeat(3, 1fr); 
+    align-items: center;
+    border-bottom: 1px solid #ddd;
   }
 
   #leads{
@@ -202,18 +212,14 @@ figure{
   
   /* Estilos para las celdas de datos de la tabla */
   #lastLeads tbody td {
-    display: flex;
-    padding: 12px;
+    padding: 1em;
     border-bottom: 1px solid #ddd;
+    color: #a3a3a3;
+  }
+
+  h1{
+    font-family: 'Arial', sans-serif;
+    color: #E11383;
   }
   
-  /* Estilos para las filas impares de la tabla */
-  #lastLeads tbody tr:nth-child(odd) {
-    background-color: #f9f9f9;
-  }
-  
-  /* Estilos para las filas pares de la tabla */
-  #lastLeads tbody tr:nth-child(even) {
-    background-color: #fff;
-  }
 
