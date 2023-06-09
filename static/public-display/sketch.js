@@ -13,6 +13,8 @@ let trash = [];
 let startImage, instructionsImage, winnerImage, thanksImage, joystick, dunkinPattern, qrCode;
 //Game images
 let donut1, donut2, badDonut1, badDonut2, playerBox;
+//Font
+let gameFont;
 
 //Sounds
 const coin = new Audio('./assets/coinSound.mp3');
@@ -41,6 +43,7 @@ function preload(){
     playerBox = loadImage('./assets/playerBox.webp');
     dunkinPattern = loadImage('./assets/DunkinPattern.webp');
     qrCode = loadImage('./assets/qrCode.png');
+    gameFont = loadFont('./assets/FredokaOne-Regular.ttf');
 }
 
 
@@ -49,6 +52,7 @@ function setup() {
     frameRate(60);
     createCanvas(windowWidth, windowHeight);
     player = new Player(windowWidth/2, windowHeight - 100)
+    textFont(gameFont);
 }
 
 function draw() {
@@ -87,12 +91,10 @@ function draw() {
             player.move();
             fill(225, 19, 131);
             textSize(18);
-            text(`Puntaje: ${score}`, 20, 35);
-            text(`Tiempo restante: ${counter}`, 20, 60);
+            text(`Puntaje: ${score}`, 20, 40);
+            text(`Tiempo restante: ${counter}`, 20, 65);
 
             // creacion de las donas
-            let angulo = 0;
-            let velocidadRotacion = 0.01;
 
             if (frameCount % 90 === 0) {
                 donuts.push(new Donut(randomDonut));
@@ -152,10 +154,10 @@ function draw() {
             textSize(25);
             textAlign(CENTER , CENTER)
             fill('white');
-            text(score, 230, 280);
+            text(score, 230, 205);
             getFinalScore();
             imageMode(CENTER);
-            image(qrCode, windowWidth/2 + 5 , windowHeight/2 + 180, 120, 120)
+            image(qrCode, windowWidth/2 + 5 , windowHeight/2 + 140, 120, 120)
             imageMode(CORNER);
             break;
 

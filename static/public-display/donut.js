@@ -9,16 +9,22 @@ class Donut {
         this.speed = floor(random(2, 5));
         this.collected = false;
         this.image = image;
+        this.rotation = 0; // Agrega la propiedad de rotación
     }
 
     show(){
         if (!this.collected) {
-            image(this.image, this.posX, this.posY, this.size, this.size);
+            push();
+            translate(this.posX + this.size / 2, this.posY + this.size / 2);
+            rotate(this.rotation); // Aplica la rotación
+            image(this.image, -this.size / 2, -this.size / 2, this.size, this.size);
+            pop();
         }
     }
 
     move(){
         this.posY += this.speed;
+        this.rotation += 0.05; // Incrementa la rotación gradualmente
     }
 
     hitsPlayer(){
@@ -26,9 +32,9 @@ class Donut {
             this.posY < player.posY + 5 &&
             this.posX > player.posX && 
             this.posX < player.posX + player.width) {
-        return true;
+            return true;
         } else {
-        return false;
+            return false;
         }
     }
 
@@ -87,16 +93,22 @@ class Trash {
         this.speed = floor(random(2, 5));
         this.collected = false;
         this.image = image;
+        this.rotation = 0; // Agrega la propiedad de rotación
     }
 
     show(){
         if (!this.collected) {
-            image(this.image, this.posX, this.posY, this.radius, this.radius);
+            push();
+            translate(this.posX + this.radius / 2, this.posY + this.radius / 2);
+            rotate(this.rotation); // Aplica la rotación
+            image(this.image, -this.radius / 2, -this.radius / 2, this.radius, this.radius);
+            pop();
         }
     }
 
     move(){
         this.posY += this.speed;
+        this.rotation += 0.05; // Incrementa la rotación gradualmente
     }
 
     hitsPlayer(){
@@ -104,9 +116,9 @@ class Trash {
             this.posY < player.posY + 5 &&
             this.posX > player.posX && 
             this.posX < player.posX + player.width) {
-        return true;
+            return true;
         } else {
-        return false;
+            return false;
         }
     }
 
