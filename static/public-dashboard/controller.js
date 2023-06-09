@@ -1,10 +1,10 @@
-const URL = `http://${window.location.hostname}:5050`;
+const URL = `${window.location.hostname}`;
 let socket = io(URL, { path: '/real-time' });
 
 const controller = (view, socket) => {
 
     (async function getDashboardData(){
-        const request = await fetch(`${URL}/dashboard`);
+        const request = await fetch(`/dashboard`);
         const data = await request.json();
         kpi = data;
         console.log(kpi)
@@ -32,7 +32,7 @@ const controller = (view, socket) => {
     })();
 
     const updateRealTime = async () =>{
-        const request = await fetch(`${URL}/dashboard`);
+        const request = await fetch(`/dashboard`);
         const data = await request.json();
         kpi = data;
         console.log(kpi)

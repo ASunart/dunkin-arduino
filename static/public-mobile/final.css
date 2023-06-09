@@ -50,15 +50,15 @@ main p{
 }
 
 .map{
-    width: 110%;
+    width: 100%;
 }
 
 .chocolate-btm{
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: -10%;
+    right: -15%;
     transform: scaleX(-1);
-    z-index: 2;
+    scale: 0.7;
 }
 
 .mini{
@@ -73,6 +73,7 @@ main p{
 .left-bottom{
     transform: scaleX(-1);
     left: -18%;
+    bottom: -5%;
 }
 
 .map-side{

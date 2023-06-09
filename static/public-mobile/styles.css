@@ -76,20 +76,25 @@ label{
 #privacy-agreement{
     width: 20%;
     border: none;
+
 }
 
 fieldset{
     display: flex;
     margin: 0 auto;
     align-items: center;
-    width: 100%;
+    width: 90%;
     border: none;
 }
 
 select#mupi-location{
-    padding: 0.5em;
     border-radius: 0.5em;
     margin: 1em 0 1em 5%;
+    color: white;
+    background-color: rgb(104, 56, 23);
+    outline: none;
+    border: none;
+    font-size: 0.8em;
 }
 
 #label-privacy{

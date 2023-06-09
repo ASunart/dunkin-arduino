@@ -1,6 +1,6 @@
-const URL = `http://${window.location.hostname}:5050`;
+const URL = `${window.location.hostname}`;
 let socket = io(URL, { path: '/real-time' });
-let screens = 0;
+let screens = 4;
 let score = 0;
 
 //Characters

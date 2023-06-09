@@ -11,9 +11,8 @@ dotenv.config();
 const app = express();
 //Static
 const STATIC_MUPI_DISPLAY = express.static('./static/public-display');
-const STATIC_MOBILE= express.static('./static/public-mobile');
-const STATIC_DASHBOARD= express.static('./static/public-dashboard');
-
+const STATIC_MOBILE = express.static('./static/public-mobile');
+const STATIC_DASHBOARD = express.static('./static/public-dashboard');
 //Middlewares
 app.use(express.json());
 app.use(cors({origin: "*"}));
