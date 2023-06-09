@@ -1,6 +1,6 @@
 const URL = `${window.location.hostname}`;
 let socket = io(URL, { path: '/real-time' });
-let screens = 4;
+let screens = 0;
 let score = 0;
 
 //Characters
@@ -76,7 +76,7 @@ function draw() {
 
             //contador
             gameMusic.play();
-            if (frameCount % 60 === 0) {
+            if (frameCount % 50 === 0) {
                 counter--;
             } else if(counter === 0){
                 counter = 0;
