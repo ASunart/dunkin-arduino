@@ -32,28 +32,28 @@ app.set('views', './static/public-mobile');
 //============================================ END
 
 //⚙️ SERIAL COMMUNICATION SETUP -------------------------------------------------
-// const protocolConfiguration = { // *New: Defining Serial configurations
-//     path: 'COM3', //*Change this COM# or usbmodem#####
-//     baudRate: 9600
-// };
-// const port = new SerialPort(protocolConfiguration);
+const protocolConfiguration = { // *New: Defining Serial configurations
+    path: '/dev/cu.usbmodem14101', //*Change this COM# or usbmodem#####
+    baudRate: 9600
+};
+const port = new SerialPort(protocolConfiguration);
 
-// //El parser es para desencriptar el mensaje de Arduino
-// const parser = port.pipe(new ReadlineParser);
+//El parser es para desencriptar el mensaje de Arduino
+const parser = port.pipe(new ReadlineParser);
 
-// //Listen to arduino messages
-// parser.on('data', (arduinoData) =>{
+//Listen to arduino messages
+parser.on('data', (arduinoData) =>{
     
-//     //Organizing an array of the arduino message to use it for the interaction
-//     let dataArray = arduinoData.split(" ");
-//     let controlStatus = {
-//         x: dataArray[1],
-//         y: dataArray[3],
-//         button: dataArray[5]
-//     }
-//     //Emit arduino message
-//     ioServer.emit('controlStatus', controlStatus);
-// })
+    //Organizing an array of the arduino message to use it for the interaction
+    let dataArray = arduinoData.split(" ");
+    let controlStatus = {
+        x: dataArray[1],
+        y: dataArray[3],
+        button: dataArray[5]
+    }
+    //Emit arduino message
+    ioServer.emit('controlStatus', controlStatus);
+})
 //============================================ END
 
 //⚙️ WEBSOCKET COMMUNICATION SETUP -------------------------------------------------

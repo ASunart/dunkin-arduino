@@ -1,5 +1,6 @@
 //------------------------------ Donas a recoger
 
+
 class Donut {
     constructor(image){
         this.posX = random(windowWidth);
@@ -79,17 +80,18 @@ class Player {
 //---------------------------- Bolita maligna
 
 class Trash {
-    constructor(){
+    constructor(image){
         this.posX = random(windowWidth);
         this.posY = 0;
         this.radius = 40;
         this.speed = floor(random(2, 5));
         this.collected = false;
+        this.image = image;
     }
 
     show(){
         if (!this.collected) {
-            image(badDonut, this.posX, this.posY, this.radius, this.radius);
+            image(this.image, this.posX, this.posY, this.radius, this.radius);
         }
     }
 
@@ -102,9 +104,9 @@ class Trash {
             this.posY < player.posY + 5 &&
             this.posX > player.posX && 
             this.posX < player.posX + player.width) {
-          return true;
+        return true;
         } else {
-          return false;
+        return false;
         }
     }
 

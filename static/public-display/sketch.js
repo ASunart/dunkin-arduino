@@ -1,6 +1,6 @@
-const URL = `${window.location.hostname}`;
+const URL = `http://${window.location.hostname}:5050`;
 let socket = io(URL, { path: '/real-time' });
-let screens = 4;
+let screens = 0;
 let score = 0;
 
 //Characters
@@ -12,7 +12,7 @@ let trash = [];
 //Screen images
 let startImage, instructionsImage, winnerImage, thanksImage, joystick, dunkinPattern, qrCode;
 //Game images
-let donut1, donut2, badDonut, playerBox;
+let donut1, donut2, badDonut1, badDonut2, playerBox;
 
 //Sounds
 const coin = new Audio('./assets/coinSound.mp3');
@@ -32,12 +32,12 @@ function preload(){
     //Images
     startImage = loadImage('./assets/Initial.webp');
     instructionsImage = loadImage('./assets/Instructions.webp');
-    winnerImage = loadImage('./assets/Winner.webp');
+    winnerImage = loadImage('./assets/Game.webp');
     thanksImage = loadImage('./assets/Gracias.webp');
-    joystick = loadImage('./assets/Joystick.webp'); 
     donut1 = loadImage('./assets/donut1.webp');
     donut2 = loadImage('./assets/donut2.webp'); 
-    badDonut = loadImage('./assets/badDonut.webp');
+    badDonut1 = loadImage('./assets/badDonut1.webp');
+    badDonut2 = loadImage('./assets/badDonut2.webp');
     playerBox = loadImage('./assets/playerBox.webp');
     dunkinPattern = loadImage('./assets/DunkinPattern.webp');
     qrCode = loadImage('./assets/qrCode.png');
@@ -56,16 +56,6 @@ function draw() {
         case 0:
             initialMusic.play();
             background(startImage);
-            if (frameCount % 120 === 0) {
-                tint(255, 0);
-                setTimeout(() => {
-                noTint();
-                }, 1000);
-            }
-
-            imageMode(CENTER)
-            image(joystick, windowWidth/2, windowHeight/2 + 100, 80, 80);
-            imageMode(CORNER)
             break;
 
         case 1:
@@ -76,6 +66,10 @@ function draw() {
         case 2:
             let donutsImage = [donut1, donut2];
             let randomDonut = random(donutsImage);
+
+            let badDonuts = [badDonut1, badDonut2];
+            let randomBadDonut = random(badDonuts);
+
             //contador
             gameMusic.play();
             if (frameCount % 60 === 0) {
@@ -97,6 +91,8 @@ function draw() {
             text(`Tiempo restante: ${counter}`, 20, 60);
 
             // creacion de las donas
+            let angulo = 0;
+            let velocidadRotacion = 0.01;
 
             if (frameCount % 90 === 0) {
                 donuts.push(new Donut(randomDonut));
@@ -124,7 +120,7 @@ function draw() {
             let trashToRemove = [];
 
             if (frameCount % 230 === 0) {
-                trash.push(new Trash());
+                trash.push(new Trash(randomBadDonut));
             }
         
             for (let i = trash.length - 1; i >= 0; i--) {
@@ -153,10 +149,10 @@ function draw() {
         case 3:
             gameMusic.pause();
             image(winnerImage, 0, 0, windowWidth, windowHeight);
-            textSize(20);
+            textSize(25);
             textAlign(CENTER , CENTER)
-            fill(04, 56, 23);
-            text(`Tu puntaje final: ${score}`, windowWidth/2, windowHeight/2);
+            fill('white');
+            text(score, 230, 280);
             getFinalScore();
             imageMode(CENTER);
             image(qrCode, windowWidth/2 + 5 , windowHeight/2 + 180, 120, 120)
